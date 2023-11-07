@@ -2610,7 +2610,1403 @@ plt.grid()
 plt.show()
 
 
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov  6 10:54:33 2023
 
+@author: aayamc
+"""
+
+import pandas as pd 
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt 
+import plotly.graph_objects as go
+import plotly.offline as pyo
+import statistics 
+from pythermalcomfort.models import pmv_ppd 
+from pythermalcomfort.utilities import v_relative, clo_dynamic
+from scipy import stats as st
+
+
+
+
+Øyra_i = pd.read_csv('øyra_302_230313_163800_nilu_noserialnumber.csv',encoding='latin1')
+Øyra_i.info()
+Øyra_i.head()
+
+
+
+
+day1 = Øyra_i.iloc[3:61
+, 10]
+
+day1B = 0
+print('Number of dissatisfied vote')
+print(day1B)
+day1P = day1.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day1P)
+t_1= 100
+p_11 = (day1B/100) * 100
+p_12 = (day1P/100) * 100
+P_1 = p_11 + p_12
+
+ACC1 = statistics.mean(Øyra_i.iloc[3:61
+, 9])
+print('The ACC is')
+print(ACC1)
+PD_air1 = (np.exp(-0.18 - 5.28 * ACC1))/(1 + np.exp(-0.18 - 5.28 * ACC1))  * 100
+print('the pd air is ')
+print(PD_air1)
+decipol_1 = 112 * (np.log (PD_air1)- 5.98)**(-4)
+print(decipol_1)
+m_col_hot_1 = statistics.mean(Øyra_i.iloc[3:61
+, 19])
+PD_elec_1 = 0
+PD_draw_1 = 0
+PD_coldfloor_1 = 0
+PD_heatsun_1 = 0
+PD_heater_1 = 0
+PPD_m_col_hot_1 = (100 - 95 * np.exp(-0.03353 * m_col_hot_1**4 - 0.2179 * m_col_hot_1**2))
+
+PD_smell1 = (Øyra_i.iloc[3:61
+, 14].value_counts()[1]/(Øyra_i.iloc[3:61
+, 14].value_counts()[1]+Øyra_i.iloc[3:61
+, 14].value_counts()[0]))*100
+PD_heavy1 = (Øyra_i.iloc[3:61
+, 15].value_counts()[1]/(Øyra_i.iloc[3:61
+, 15].value_counts()[1]+Øyra_i.iloc[3:61
+, 15].value_counts()[0]))*100
+PD_dry1 = (Øyra_i.iloc[3:61
+, 16].value_counts()[1]/(Øyra_i.iloc[3:61
+, 16].value_counts()[1]+Øyra_i.iloc[3:61
+, 16].value_counts()[0]))*100
+PD_dust1 = 0
+
+
+Per_t_1 = PD_elec_1 + PD_draw_1 + PD_coldfloor_1 + PD_heatsun_1 + PD_heater_1 + PPD_m_col_hot_1
+
+Per_PD_elec_1 = PD_elec_1 / Per_t_1
+Per_PD_draw_1 = PD_draw_1 / Per_t_1
+Per_PD_coldfloor_1 = PD_coldfloor_1 / Per_t_1
+Per_PD_heatsun_1 = 0 
+Per_PD_heater_1 = PD_heater_1 / Per_t_1
+Per_PPD_m_col_hot_1 = PPD_m_col_hot_1 / Per_t_1
+
+Per_ta_1 = PD_smell1 + PD_heavy1 + PD_dry1 + PD_dust1
+Per_PD_smell1 = PD_smell1 / Per_ta_1
+Per_PD_heavy1 = PD_heavy1 / Per_ta_1
+Per_PD_dry1 = PD_dry1 / Per_ta_1
+Per_PD_dust1 = PD_dust1 / Per_ta_1
+
+
+day2 = Øyra_i.iloc[63:88
+, 10]
+print('its here')
+print(day2)
+
+day2B = day2.value_counts()[4]
+print('Number of dissatisfied vote')
+print(day2B)
+day2P = day2.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day2P)
+t_2= 50
+p_21 = (day2B/50) * 100
+p_22 = (day2P/50) * 100
+P_2 = p_21 + p_22
+
+
+ACC2 = statistics.mean(Øyra_i.iloc[63:88
+, 9])
+PD_air2 = (np.exp(-0.18 - 5.28 * ACC2))/(1 + np.exp(-0.18 - 5.28 * ACC2))  * 100
+decipol_2 = 112 * (np.log (PD_air2)- 5.98)**(-4)
+
+m_col_hot_2 = statistics.mean(Øyra_i.iloc[63:88
+, 19])
+print(m_col_hot_2)
+PD_elec_2 = (Øyra_i.iloc[63:88
+, 18].value_counts()[1]/(Øyra_i.iloc[63:88
+, 18].value_counts()[1]+Øyra_i.iloc[63:88
+, 18].value_counts()[0]))*100
+PD_draw_2 = (Øyra_i.iloc[63:88
+, 20].value_counts()[1]/(Øyra_i.iloc[63:88
+, 20].value_counts()[1]+Øyra_i.iloc[63:88
+, 20].value_counts()[0]))*100
+PD_coldfloor_2 = (Øyra_i.iloc[63:88
+, 21].value_counts()[1]/(Øyra_i.iloc[63:88
+, 21].value_counts()[1]+Øyra_i.iloc[63:88
+, 21].value_counts()[0]))*100
+PD_heatsun_2 = (Øyra_i.iloc[63:88
+, 22].value_counts()[1]/(Øyra_i.iloc[63:88
+, 22].value_counts()[1]+Øyra_i.iloc[63:88
+, 22].value_counts()[0]))*100
+PD_heater_2 = (Øyra_i.iloc[63:88
+, 23].value_counts()[1]/(Øyra_i.iloc[63:88
+, 23].value_counts()[1]+Øyra_i.iloc[63:88
+, 23].value_counts()[0]))*100
+PPD_m_col_hot_2 = (100 - 95 * np.exp(-0.03353 * m_col_hot_2**4 - 0.2179 * m_col_hot_2**2))
+
+
+PD_smell2 = 0
+PD_heavy2 = (Øyra_i.iloc[63:88
+, 15].value_counts()[1]/(Øyra_i.iloc[63:88
+, 15].value_counts()[1]+Øyra_i.iloc[63:88
+, 15].value_counts()[0]))*100
+PD_dry2 = (Øyra_i.iloc[63:88
+, 16].value_counts()[1]/(Øyra_i.iloc[63:88
+, 16].value_counts()[1]+Øyra_i.iloc[63:88
+, 16].value_counts()[0]))*100
+PD_dust2 = (Øyra_i.iloc[63:88
+, 17].value_counts()[1]/(Øyra_i.iloc[63:88
+, 17].value_counts()[1]+Øyra_i.iloc[63:88
+, 17].value_counts()[0]))*100
+
+
+
+Per_t_2 = PD_elec_2 + PD_draw_2 + PD_coldfloor_2 + PD_heatsun_2 + PD_heater_2 + PPD_m_col_hot_2
+Per_ta_2 = PD_smell2 + PD_heavy2 + PD_dry2 + PD_dust2
+Per_PD_smell2 = PD_smell2 / Per_ta_2
+Per_PD_heavy2 = PD_heavy2 / Per_ta_2
+Per_PD_dry2 = PD_dry2 / Per_ta_2
+Per_PD_dust2 = PD_dust2 / Per_ta_2
+
+Per_PD_elec_2 = PD_elec_2 / Per_t_2
+Per_PD_draw_2 = PD_draw_2 / Per_t_2
+Per_PD_coldfloor_2 = PD_coldfloor_2 / Per_t_2
+Per_PD_heatsun_2 = PD_heatsun_2 / Per_t_2
+Per_PD_heater_2 = PD_heater_2 / Per_t_2
+Per_PPD_m_col_hot_2 = PPD_m_col_hot_2 / Per_t_2
+
+day3 = Øyra_i.iloc[89:123
+, 10]
+
+day3B = day3.value_counts()[4]
+print('Number of dissatisfied vote')
+print(day3B)
+day3P = day3.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day3P)
+t_3= 205 - 152
+p_31 = (day3B/t_3) * 100
+p_32 = (day3P/t_3) * 100
+P_3 = p_31 + p_32
+
+
+ACC3 = statistics.mean(Øyra_i.iloc[89:123
+, 9])
+PD_air3 = (np.exp(-0.18 - 5.28 * ACC3))/(1 + np.exp(-0.18 - 5.28 * ACC3))  * 100
+decipol_3 = 112 * (np.log (PD_air3)- 5.98)**(-4)
+
+
+m_col_hot_3 = statistics.mean(Øyra_i.iloc[89:123
+, 19])
+print(m_col_hot_3)
+PD_elec_3 = (Øyra_i.iloc[89:123
+, 18].value_counts()[1]/(Øyra_i.iloc[89:123
+, 18].value_counts()[1]+Øyra_i.iloc[89:123
+, 18].value_counts()[0]))*100
+PD_draw_3 = (Øyra_i.iloc[89:123
+, 20].value_counts()[1]/(Øyra_i.iloc[89:123
+, 20].value_counts()[1]+Øyra_i.iloc[89:123
+, 20].value_counts()[0]))*100
+PD_coldfloor_3 = (Øyra_i.iloc[89:123
+, 21].value_counts()[1]/(Øyra_i.iloc[89:123
+, 21].value_counts()[1]+Øyra_i.iloc[89:123
+, 21].value_counts()[0]))*100
+PD_heatsun_3 = (Øyra_i.iloc[89:123
+, 22].value_counts()[1]/(Øyra_i.iloc[89:123
+, 22].value_counts()[1]+Øyra_i.iloc[89:123
+, 22].value_counts()[0]))*100
+PD_heater_3 = (Øyra_i.iloc[89:123
+, 23].value_counts()[1]/(Øyra_i.iloc[89:123
+, 23].value_counts()[1]+Øyra_i.iloc[89:123
+, 23].value_counts()[0]))*100
+PPD_m_col_hot_3 = (100 - 95 * np.exp(-0.03353 * m_col_hot_3**4 - 0.2179 * m_col_hot_3**2))
+
+
+
+PD_smell3 = (Øyra_i.iloc[89:123
+, 14].value_counts()[1]/(Øyra_i.iloc[89:123
+, 14].value_counts()[1]+Øyra_i.iloc[89:123
+, 14].value_counts()[0]))*100
+PD_heavy3 = (Øyra_i.iloc[89:123
+, 15].value_counts()[1]/(Øyra_i.iloc[89:123
+, 15].value_counts()[1]+Øyra_i.iloc[89:123
+, 15].value_counts()[0]))*100
+PD_dry3 = (Øyra_i.iloc[89:123
+, 16].value_counts()[1]/(Øyra_i.iloc[89:123
+, 16].value_counts()[1]+Øyra_i.iloc[89:123
+, 16].value_counts()[0]))*100
+PD_dust3 = (Øyra_i.iloc[89:123
+, 17].value_counts()[1]/(Øyra_i.iloc[89:123
+, 17].value_counts()[1]+Øyra_i.iloc[89:123
+, 17].value_counts()[0]))*100
+
+
+Per_t_3 = PD_elec_3 + PD_draw_3 + PD_coldfloor_3 + PD_heatsun_3 + PD_heater_3 + PPD_m_col_hot_3
+Per_ta_3 = PD_smell3 + PD_heavy3 + PD_dry3 + PD_dust3
+Per_PD_elec_3 = PD_elec_3 / Per_t_3
+Per_PD_draw_3 = PD_draw_3 / Per_t_3
+Per_PD_coldfloor_3 = PD_coldfloor_3 / Per_t_3
+Per_PD_heatsun_3 = PD_heatsun_3 / Per_t_3
+Per_PD_heater_3 = PD_heater_3 / Per_t_3
+Per_PPD_m_col_hot_3 = PPD_m_col_hot_3 / Per_t_3
+
+
+Per_ta_3 = PD_smell3 + PD_heavy3 + PD_dry3 + PD_dust3
+Per_PD_smell3 = PD_smell3 / Per_ta_3
+Per_PD_heavy3 = PD_heavy3 / Per_ta_3
+Per_PD_dry3 = PD_dry3 / Per_ta_3
+Per_PD_dust3 = PD_dust3 / Per_ta_3
+
+day4 = Øyra_i.iloc[124:140
+, 10]
+
+day4B = 0
+print('Number of dissatisfied vote')
+print(day4B)
+day4P = 0
+print('Number of dissatisfied vote')
+print(day4P)
+t_4= 253 - 206
+p_41 = (day4B/t_4) * 100
+p_42 = (day4P/t_4) * 100
+P_4 = p_41 + p_42
+
+ACC4 = statistics.mean(Øyra_i.iloc[124:140
+, 9])
+PD_air4 = (np.exp(-0.18 - 5.28 * ACC4))/(1 + np.exp(-0.18 - 5.28 * ACC4))  * 100
+decipol_4 = 112 * (np.log (PD_air4)- 5.98)**(-4)
+
+
+
+PD_elec_4 = 0
+PD_draw_4 = 0
+PD_coldfloor_4 = 0
+PD_heatsun_4 = 0
+PD_heater_4 = 0
+
+
+m_col_hot_4 = statistics.mean(Øyra_i.iloc[124:140
+, 19])
+print(m_col_hot_4)
+
+
+
+PPD_m_col_hot_4 = (100 - 95 * np.exp(-0.03353 * m_col_hot_4**4 - 0.2179 * m_col_hot_4**2))
+
+PD_smell4 = 0
+PD_heavy4 = 0
+PD_dry4 = 0
+PD_dust4 = 0
+
+
+
+Per_t_4 = PD_elec_4 + PD_draw_4 + PD_coldfloor_4 + PD_heatsun_4 + PD_heater_4 + PPD_m_col_hot_4
+
+Per_PD_elec_4 = PD_elec_4 / Per_t_4
+Per_PD_draw_4 = PD_draw_4 / Per_t_4
+Per_PD_coldfloor_4 = PD_coldfloor_4 / Per_t_4
+Per_PD_heatsun_4 = PD_heatsun_4 / Per_t_4
+Per_PD_heater_4 = PD_heater_4 / Per_t_4
+Per_PPD_m_col_hot_4 = PPD_m_col_hot_4 / Per_t_4
+
+
+Per_ta_4 = PD_smell4 + PD_heavy4 + PD_dry4 + PD_dust4
+Per_PD_smell4 = 0
+Per_PD_heavy4 = 0
+Per_PD_dry4 = 0
+Per_PD_dust4 = 0
+
+day5 = Øyra_i.iloc[141:146
+, 10]
+
+day5B = 0
+print('Number of dissatisfied vote')
+print(day5B)
+day5P = day5.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day5P)
+t_5= 323 - 254
+p_51 = (day5B/t_5) * 100
+p_52 = (day5P/t_5) * 100
+P_5 = p_51 + p_52
+
+ACC5 = statistics.mean(Øyra_i.iloc[141:146
+, 9])
+PD_air5 = (np.exp(-0.18 - 5.28 * ACC5))/(1 + np.exp(-0.18 - 5.28 * ACC5))  * 100
+decipol_5 = 112 * (np.log (PD_air5)- 5.98)**(-4)
+m_col_hot_5 = statistics.mean(Øyra_i.iloc[141:146
+, 19])
+print(m_col_hot_5)
+
+
+PD_elec_5 = 0
+PD_draw_5 = 0
+PD_coldfloor_5 = 0
+PD_heatsun_5 = 0
+PD_heater_5 = 0
+
+PPD_m_col_hot_5 = (100 - 95 * np.exp(-0.03353 * m_col_hot_5**4 - 0.2179 * m_col_hot_5**2))
+
+
+PD_smell5 = 0
+PD_heavy5 = 0
+PD_dry5 = 0
+PD_dust5 = 0
+
+
+Per_ta_5 = PD_smell5 + PD_heavy5 + PD_dry5 + PD_dust5
+Per_PD_smell5 = 0
+Per_PD_heavy5 = 0
+Per_PD_dry5 = 0
+Per_PD_dust5 = 0
+
+Per_t_5 = PD_elec_5 + PD_draw_5 + PD_coldfloor_5 + PD_heatsun_5 + PD_heater_5 + PPD_m_col_hot_5
+Per_PD_elec_5 = PD_elec_5 / Per_t_5
+Per_PD_draw_5 = PD_draw_5 / Per_t_5
+Per_PD_coldfloor_5 = PD_coldfloor_5 / Per_t_5
+Per_PD_heatsun_5 = PD_heatsun_5 / Per_t_5
+Per_PD_heater_5 = PD_heater_5 / Per_t_5
+Per_PPD_m_col_hot_5 = PPD_m_col_hot_5 / Per_t_5
+
+day6 = Øyra_i.iloc[147:178
+, 10]
+
+day6B = day6.value_counts()[4]
+print('Number of dissatisfied vote')
+print(day6B)
+day6P = day6.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day6P)
+t_6= 370 - 324
+p_61 = (day6B/t_6) * 100
+p_62 = (day6P/t_6) * 100
+P_6 = p_61 + p_62
+
+ACC6 = statistics.mean(Øyra_i.iloc[147:178
+, 9])
+PD_air6 = (np.exp(-0.18 - 5.28 * ACC6))/(1 + np.exp(-0.18 - 5.28 * ACC6))  * 100
+decipol_6 = 112 * (np.log (PD_air6)- 5.98)**(-4)
+
+
+m_col_hot_6 = statistics.mean(Øyra_i.iloc[147:178
+, 19])
+
+
+PD_elec_6 = 0
+PD_draw_6 = 0
+PD_coldfloor_6 = (Øyra_i.iloc[147:178
+, 21].value_counts()[1]/(Øyra_i.iloc[147:178
+, 21].value_counts()[1]+Øyra_i.iloc[147:178
+, 21].value_counts()[0]))*100
+PD_heatsun_6 = 0
+PD_heater_6 = 0
+PPD_m_col_hot_6 = (100 - 95 * np.exp(-0.03353 * m_col_hot_6**4 - 0.2179 * m_col_hot_6**2))
+
+
+PD_smell6 = (Øyra_i.iloc[147:178
+, 14].value_counts()[1]/(Øyra_i.iloc[147:178
+, 14].value_counts()[1]+Øyra_i.iloc[147:178
+, 14].value_counts()[0]))*100
+PD_heavy6 = (Øyra_i.iloc[147:178
+, 15].value_counts()[1]/(Øyra_i.iloc[147:178
+, 15].value_counts()[1]+Øyra_i.iloc[147:178
+, 15].value_counts()[0]))*100
+PD_dry6 = (Øyra_i.iloc[147:178
+, 16].value_counts()[1]/(Øyra_i.iloc[147:178
+, 16].value_counts()[1]+Øyra_i.iloc[147:178
+, 16].value_counts()[0]))*100
+PD_dust6 = (Øyra_i.iloc[147:178
+, 17].value_counts()[1]/(Øyra_i.iloc[147:178
+, 17].value_counts()[1]+Øyra_i.iloc[147:178
+, 17].value_counts()[0]))*100
+
+
+Per_t_6 = PD_elec_6 + PD_draw_6 + PD_coldfloor_6 + PD_heatsun_6 + PD_heater_6 + PPD_m_col_hot_6
+Per_PD_elec_6 = PD_elec_6 / Per_t_6
+Per_PD_draw_6 = PD_draw_6 / Per_t_6
+Per_PD_coldfloor_6 = PD_coldfloor_6 / Per_t_6
+Per_PD_heatsun_6 = PD_heatsun_6 / Per_t_6
+Per_PD_heater_6 = PD_heater_6 / Per_t_6
+Per_PPD_m_col_hot_6 = PPD_m_col_hot_6 / Per_t_6
+
+Per_ta_6 = PD_smell6 + PD_heavy6 + PD_dry6 + PD_dust6
+Per_PD_smell6 = PD_smell6 / Per_ta_6
+Per_PD_heavy6 = PD_heavy6 / Per_ta_6
+Per_PD_dry6 = PD_dry6 / Per_ta_6
+Per_PD_dust6 = PD_dust6 / Per_ta_6
+
+
+day7 = Øyra_i.iloc[179:209
+, 10]
+
+day7B = 0
+print('Number of dissatisfied vote')
+print(day7B)
+day7P = day7.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day7P)
+t_7= 422 - 371
+p_71 = (day7B/t_7) * 100
+p_72 = (day7P/t_7) * 100
+P_7 = p_71 + p_72
+
+ACC7 = statistics.mean(Øyra_i.iloc[179:209
+, 9])
+PD_air7 = (np.exp(-0.18 - 5.28 * ACC7))/(1 + np.exp(-0.18 - 5.28 * ACC7))  * 100
+decipol_7 = 112 * (np.log (PD_air7)- 5.98)**(-4)
+m_col_hot_7 = statistics.mean(Øyra_i.iloc[179:209
+, 19])
+print(m_col_hot_7)
+
+
+
+PD_elec_7 = 0
+PD_draw_7 = 0
+PD_coldfloor_7 = 0
+PD_heatsun_7 = 0
+PD_heater_7 = 0
+PPD_m_col_hot_7 = (100 - 95 * np.exp(-0.03353 * m_col_hot_7 **4 - 0.2179 * m_col_hot_7 **2))
+
+PD_smell7 = 0
+PD_heavy7 = (Øyra_i.iloc[179:209
+, 15].value_counts()[1]/(Øyra_i.iloc[179:209
+, 15].value_counts()[1]+Øyra_i.iloc[179:209
+, 15].value_counts()[0]))*100
+PD_dry7 = (Øyra_i.iloc[179:209
+, 16].value_counts()[1]/(Øyra_i.iloc[179:209
+, 16].value_counts()[1]+Øyra_i.iloc[179:209
+, 16].value_counts()[0]))*100
+PD_dust7 = 0
+
+Per_t_7 = PD_elec_7 + PD_draw_7 + PD_coldfloor_7 + PD_heatsun_7 + PD_heater_7 + PPD_m_col_hot_7
+Per_PD_elec_7 = PD_elec_7 / Per_t_7
+Per_PD_draw_7 = PD_draw_7 / Per_t_7
+Per_PD_coldfloor_7 = PD_coldfloor_7 / Per_t_7
+Per_PD_heatsun_7 = PD_heatsun_7 / Per_t_7
+Per_PD_heater_7 = PD_heater_7 / Per_t_7
+Per_PPD_m_col_hot_7 = PPD_m_col_hot_7 / Per_t_7
+
+Per_ta_7 = PD_smell7 + PD_heavy7 + PD_dry7 + PD_dust7
+Per_PD_smell7 = PD_smell7 / Per_ta_7
+Per_PD_heavy7 = PD_heavy7 / Per_ta_7
+Per_PD_dry7 = PD_dry7 / Per_ta_7
+Per_PD_dust7 = PD_dust7 / Per_ta_7
+
+
+day8 = Øyra_i.iloc[210:246
+, 10]
+
+day8B = day8.value_counts()[4]
+print('Number of dissatisfied vote')
+print(day8B)
+day8P = day8.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day8P)
+t_8= 459 - 423
+p_81 = (day8B/t_8) * 100
+p_82 = (day8P/t_8) * 100
+P_8 = p_81 + p_82
+
+
+ACC8 = statistics.mean(Øyra_i.iloc[210:246
+, 9])
+PD_air8 = (np.exp(-0.18 - 5.28 * ACC8))/(1 + np.exp(-0.18 - 5.28 * ACC8))  * 100
+decipol_8 = 112 * (np.log (PD_air8)- 5.98)**(-4)
+PD_elec_8 = (Øyra_i.iloc[210:246
+, 18].value_counts()[1]/(Øyra_i.iloc[210:246
+, 18].value_counts()[1]+Øyra_i.iloc[210:246
+, 18].value_counts()[0]))*100
+PD_draw_8 = (Øyra_i.iloc[210:246
+, 20].value_counts()[1]/(Øyra_i.iloc[210:246
+, 20].value_counts()[1]+Øyra_i.iloc[210:246
+, 20].value_counts()[0]))*100
+PD_coldfloor_8 = (Øyra_i.iloc[210:246
+, 21].value_counts()[1]/(Øyra_i.iloc[210:246
+, 21].value_counts()[1]+Øyra_i.iloc[210:246
+, 21].value_counts()[0]))*100
+PD_heatsun_8 = (Øyra_i.iloc[210:246
+, 22].value_counts()[1]/(Øyra_i.iloc[210:246
+, 22].value_counts()[1]+Øyra_i.iloc[210:246
+, 22].value_counts()[0]))*100
+PD_heater_8 = (Øyra_i.iloc[210:246
+, 23].value_counts()[1]/(Øyra_i.iloc[210:246
+, 23].value_counts()[1]+Øyra_i.iloc[210:246
+, 23].value_counts()[0]))*100
+
+
+
+m_col_hot_8 = statistics.mean(Øyra_i.iloc[210:246
+, 19])
+print(m_col_hot_8)
+
+
+
+PD_smell8 = (Øyra_i.iloc[210:246
+, 14].value_counts()[1]/(Øyra_i.iloc[210:246
+, 14].value_counts()[1]+Øyra_i.iloc[210:246
+, 14].value_counts()[0]))*100
+PD_heavy8 = (Øyra_i.iloc[210:246
+, 15].value_counts()[1]/(Øyra_i.iloc[210:246
+, 15].value_counts()[1]+Øyra_i.iloc[210:246
+, 15].value_counts()[0]))*100
+PD_dry8 = (Øyra_i.iloc[210:246
+, 16].value_counts()[1]/(Øyra_i.iloc[210:246
+, 16].value_counts()[1]+Øyra_i.iloc[210:246
+, 16].value_counts()[0]))*100
+PD_dust8 = (Øyra_i.iloc[210:246
+, 17].value_counts()[1]/(Øyra_i.iloc[210:246
+, 17].value_counts()[1]+Øyra_i.iloc[210:246
+, 17].value_counts()[0]))*100
+
+
+
+
+PPD_m_col_hot_8 = (100 - 95 * np.exp(-0.03353 * m_col_hot_8 **4 - 0.2179 * m_col_hot_8 **2))
+Per_t_8 = PD_elec_8 + PD_draw_8 + PD_coldfloor_8 + PD_heatsun_8 + PD_heater_8 + PPD_m_col_hot_8
+Per_PD_elec_8 = PD_elec_8 / Per_t_8
+Per_PD_draw_8 = PD_draw_8 / Per_t_8
+Per_PD_coldfloor_8 = PD_coldfloor_8 / Per_t_8
+Per_PD_heatsun_8 = PD_heatsun_8 / Per_t_8
+Per_PD_heater_8 = PD_heater_8 / Per_t_8
+Per_PPD_m_col_hot_8 = PPD_m_col_hot_8 / Per_t_8
+
+Per_ta_8 = PD_smell8 + PD_heavy8 + PD_dry8 + PD_dust8
+Per_PD_smell8 = PD_smell8 / Per_ta_8
+Per_PD_heavy8 = PD_heavy8 / Per_ta_8
+Per_PD_dry8 = PD_dry8 / Per_ta_8
+Per_PD_dust8 = PD_dust8 / Per_ta_8
+
+day9 = Øyra_i.iloc[247:261
+, 10]
+
+day9B = day9.value_counts()[4]
+print('Number of dissatisfied vote')
+print(day9B)
+day9P = day9.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day9P)
+t_9= 501 - 460
+p_91 = (day9B/t_9) * 100
+p_92 = (day9P/t_9) * 100
+P_9 = p_91 + p_92
+
+
+ACC9 = statistics.mean(Øyra_i.iloc[247:261
+, 9])
+PD_air9 = (np.exp(-0.18 - 5.28 * ACC9))/(1 + np.exp(-0.18 - 5.28 * ACC9))  * 100
+decipol_9 = 112 * (np.log (PD_air9)- 5.98)**(-4)
+PD_elec_9 = 0
+PD_draw_9 = 0
+PD_coldfloor_9 = 0
+PD_heatsun_9 = 0
+PD_heater_9 = (Øyra_i.iloc[247:261
+, 23].value_counts()[1]/(Øyra_i.iloc[247:261
+, 23].value_counts()[1]+Øyra_i.iloc[247:261
+, 23].value_counts()[0]))*100
+
+
+
+m_col_hot_9 = statistics.mean(Øyra_i.iloc[247:261
+, 19])
+print(m_col_hot_9)
+
+
+PD_smell9 = 0
+PD_heavy9 = 0
+PD_dry9 = 0
+PD_dust9 = 0
+
+
+
+
+PPD_m_col_hot_9 = (100 - 95 * np.exp(-0.03353 * m_col_hot_9 **4 - 0.2179 * m_col_hot_9 **2))
+Per_t_9 = PD_elec_9 + PD_draw_9 + PD_coldfloor_9 + PD_heatsun_9 + PD_heater_9 + PPD_m_col_hot_9
+Per_PD_elec_9 = PD_elec_9 / Per_t_9
+Per_PD_draw_9 = PD_draw_9 / Per_t_9
+Per_PD_coldfloor_9 = PD_coldfloor_9 / Per_t_9
+Per_PD_heatsun_9 = PD_heatsun_9 / Per_t_9
+Per_PD_heater_9 = PD_heater_9 / Per_t_9
+Per_PPD_m_col_hot_9 = PPD_m_col_hot_9 / Per_t_9
+
+Per_ta_9 = PD_smell9 + PD_heavy9 + PD_dry9 + PD_dust9
+Per_PD_smell9 = 0
+Per_PD_heavy9 = 0
+Per_PD_dry9 = 0
+Per_PD_dust9 = 0
+
+day10 = Øyra_i.iloc[262:294
+, 10]
+
+day10B = 0
+print('Number of dissatisfied vote')
+print(day10B)
+day10P = day10.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day10P)
+t_10= 538 - 502
+p_101 = (day10B/t_10) * 100
+p_102 = (day10P/t_10) * 100
+P_10 = p_101 + p_102
+
+ACC10 = statistics.mean(Øyra_i.iloc[262:294
+, 9])
+PD_air10 = (np.exp(-0.18 - 5.28 * ACC10))/(1 + np.exp(-0.18 - 5.28 * ACC10))  * 100
+decipol_10 = 112 * (np.log (PD_air10)- 5.98)**(-4)
+m_col_hot_10 = statistics.mean(Øyra_i.iloc[262:294
+, 19])
+print(m_col_hot_10)
+
+
+PD_elec_10 = 0
+PD_draw_10 = 0
+PD_coldfloor_10 = 0
+PD_heatsun_10 = 0
+PD_heater_10 = 0
+
+
+PD_smell10 = 0
+PD_heavy10 = 0
+PD_dry10 = 0
+PD_dust10 = 0
+
+
+
+
+PPD_m_col_hot_10 = (100 - 95 * np.exp(-0.03353 * m_col_hot_10 **4 - 0.2179 * m_col_hot_10 **2))
+Per_t_10 = PD_elec_10 + PD_draw_10 + PD_coldfloor_10 + PD_heatsun_10 + PD_heater_10 + PPD_m_col_hot_10
+Per_PD_elec_10 = PD_elec_10 / Per_t_10
+Per_PD_draw_10 = PD_draw_10 / Per_t_10
+Per_PD_coldfloor_10 = PD_coldfloor_10 / Per_t_10
+Per_PD_heatsun_10 = PD_heatsun_10 / Per_t_10
+Per_PD_heater_10 = PD_heater_10 / Per_t_10
+Per_PPD_m_col_hot_10 = PPD_m_col_hot_10 / Per_t_10
+
+
+Per_ta_10 = PD_smell10 + PD_heavy10 + PD_dry10 + PD_dust10
+Per_PD_smell10 = 0
+Per_PD_heavy10 = 0
+Per_PD_dry10 = 0
+Per_PD_dust10 = 0
+
+day11 = Øyra_i.iloc[295:317
+, 10]
+
+day11B = 0
+print('Number of dissatisfied vote')
+print(day11B)
+day11P = day11.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day11P)
+t_11= 539-586
+p_111 = (day11B/t_11) * 100
+p_112 = (day11P/t_11) * 100
+P_11 = p_111 + p_112
+
+
+ACC11 = statistics.mean(Øyra_i.iloc[295:317
+, 9])
+PD_air11 = (np.exp(-0.18 - 5.28 * ACC11))/(1 + np.exp(-0.18 - 5.28 * ACC11))  * 100
+decipol_11 = 112 * (np.log (PD_air11)- 5.98)**(-4)
+PD_elec_11 = 0
+PD_draw_11 = 0
+PD_coldfloor_11 = 0
+PD_heatsun_11 = 0
+PD_heater_11 = 0
+
+
+
+m_col_hot_11 = statistics.mean(Øyra_i.iloc[295:317
+, 19])
+print(m_col_hot_11)
+
+
+
+PPD_m_col_hot_11 = (100 - 95 * np.exp(-0.03353 * m_col_hot_11 **4 - 0.2179 * m_col_hot_11 **2))
+
+PD_smell11 = 0
+PD_heavy11 = 0
+PD_dry11 = 0
+PD_dust11 = 0
+
+
+Per_ta_11 = PD_smell11 + PD_heavy11 + PD_dry11 + PD_dust11
+Per_PD_smell11 = 0
+Per_PD_heavy11 = 0
+Per_PD_dry11 = 0
+Per_PD_dust11 = 0
+
+
+PD_smell11 = 0
+PD_heavy11 = 0
+PD_dry11 = 0
+PD_dust11 = 0
+
+
+
+Per_t_11 = PD_elec_11 + PD_draw_11 + PD_coldfloor_11 + PD_heatsun_11 + PD_heater_11 + PPD_m_col_hot_11
+Per_PD_elec_11 = PD_elec_11 / Per_t_11
+Per_PD_draw_11 = PD_draw_11 / Per_t_11
+Per_PD_coldfloor_11 = PD_coldfloor_11 / Per_t_11
+Per_PD_heatsun_11 = PD_heatsun_11 / Per_t_11
+Per_PD_heater_11 = PD_heater_11 / Per_t_11
+Per_PPD_m_col_hot_11 = PPD_m_col_hot_11 / Per_t_11
+
+day12 = Øyra_i.iloc[318:324
+, 10]
+
+day12B = 0
+print('Number of dissatisfied vote')
+print(day12B)
+day12P = day12.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day12P)
+t_12 = 628 - 587
+p_121 = (day12B/t_12) * 100
+p_122 = (day12P/t_12) * 100
+P_12 = p_121 + p_122
+
+ACC12 = statistics.mean(Øyra_i.iloc[318:324
+, 9])
+PD_air12 = (np.exp(-0.18 - 5.28 * ACC12))/(1 + np.exp(-0.18 - 5.28 * ACC12))  * 100
+decipol_12 = 112 * (np.log (PD_air12)- 5.98)**(-4)
+PD_elec_12 = 0
+PD_draw_12 = 0
+PD_coldfloor_12 = 0
+PD_heatsun_12 = 0
+PD_heater_12 = 0
+
+
+m_col_hot_12 = statistics.mean(Øyra_i.iloc[318:324
+, 19])
+
+
+PPD_m_col_hot_12 = (100 - 95 * np.exp(-0.03353 * m_col_hot_12 **4 - 0.2179 * m_col_hot_12 **2))
+
+
+PD_smell12 = 0
+PD_heavy12 = 0
+PD_dry12 = 0
+PD_dust12 = 0
+
+Per_ta_12 = PD_smell12 + PD_heavy12 + PD_dry12 + PD_dust12
+Per_PD_smell12 = 0
+Per_PD_heavy12 = 0
+Per_PD_dry12 = 0
+Per_PD_dust12 = 0
+Per_t_12 = PD_elec_12 + PD_draw_12 + PD_coldfloor_12 + PD_heatsun_12 + PD_heater_12 + PPD_m_col_hot_12
+Per_PD_elec_12 = PD_elec_12 / Per_t_12
+Per_PD_draw_12 = PD_draw_12 / Per_t_12
+Per_PD_coldfloor_12 = PD_coldfloor_12 / Per_t_12
+Per_PD_heatsun_12 = PD_heatsun_12 / Per_t_12
+Per_PD_heater_12 = PD_heater_12 / Per_t_12
+Per_PPD_m_col_hot_12 = PPD_m_col_hot_12 / Per_t_12
+
+day13 = Øyra_i.iloc[325:356
+, 10]
+
+day13B = day13.value_counts()[4]
+print('Number of dissatisfied vote')
+print(day13B)
+day13P = day13.value_counts()[3]
+print('Number of dissatisfied vote')
+print(day13P)
+t_13 = 664 - 629
+p_131 = (day13B/t_13) * 100
+p_132 = (day13P/t_13) * 100
+P_13 = p_131 + p_132
+
+
+ACC13 = statistics.mean(Øyra_i.iloc[325:356
+, 9])
+PD_air13 = (np.exp(-0.18 - 5.28 * ACC13))/(1 + np.exp(-0.18 - 5.28 * ACC13))  * 100
+decipol_13 = 112 * (np.log (PD_air13)- 5.98)**(-4)
+
+PD_elec_13 = 0
+PD_draw_13 = (Øyra_i.iloc[325:356
+, 20].value_counts()[1]/(Øyra_i.iloc[325:356
+, 20].value_counts()[1]+Øyra_i.iloc[325:356
+, 20].value_counts()[0]))*100
+PD_coldfloor_13 = 0
+PD_heatsun_13 = 0
+PD_heater_13 = 0
+
+m_col_hot_13 = statistics.mean(Øyra_i.iloc[325:356
+, 19])
+print(m_col_hot_13)
+
+
+PPD_m_col_hot_13 = (100 - 95 * np.exp(-0.03353 * m_col_hot_13 **4 - 0.2179 * m_col_hot_13 **2))
+
+
+PD_smell13 = 0
+PD_heavy13 = 0
+PD_dry13 = 0
+PD_dust13 = 0
+Per_ta_13 = PD_smell13 + PD_heavy13 + PD_dry13 + PD_dust13
+Per_PD_smell13 = 0
+Per_PD_heavy13 = 0
+Per_PD_dry13 = 0
+Per_PD_dust13 = 0
+
+Per_t_13 = PD_elec_13 + PD_draw_13 + PD_coldfloor_13 + PD_heatsun_13 + PD_heater_13 + PPD_m_col_hot_13
+Per_PD_elec_13 = PD_elec_13 / Per_t_13
+Per_PD_draw_13 = PD_draw_13 / Per_t_13
+Per_PD_coldfloor_13 = PD_coldfloor_13 / Per_t_13
+Per_PD_heatsun_13 = PD_heatsun_13 / Per_t_13
+Per_PD_heater_13 = PD_heater_13 / Per_t_13
+Per_PPD_m_col_hot_13 = PPD_m_col_hot_13 / Per_t_13
+
+ele_p = [PD_elec_1,PD_elec_2,PD_elec_3,PD_elec_4,PD_elec_5,PD_elec_6,PD_elec_7,PD_elec_8,PD_elec_9,PD_elec_10,PD_elec_11,PD_elec_12,PD_elec_13]
+col_hot_p = [PPD_m_col_hot_1, PPD_m_col_hot_2,PPD_m_col_hot_3,PPD_m_col_hot_4,PPD_m_col_hot_5,PPD_m_col_hot_6,PPD_m_col_hot_7,PPD_m_col_hot_8,PPD_m_col_hot_9,PPD_m_col_hot_10,PPD_m_col_hot_11,PPD_m_col_hot_12,PPD_m_col_hot_13]
+draw_p = [PD_draw_1,PD_draw_2,PD_draw_3,PD_draw_4,PD_draw_5,PD_draw_6,PD_draw_7,PD_draw_8,PD_draw_9,PD_draw_10,PD_draw_11,PD_draw_12,PD_draw_13]
+fcold_p = [PD_coldfloor_1,PD_coldfloor_2,PD_coldfloor_3,PD_coldfloor_4,PD_coldfloor_5,PD_coldfloor_6,PD_coldfloor_7,PD_coldfloor_8,PD_coldfloor_9,PD_coldfloor_10,PD_coldfloor_11,PD_coldfloor_12,PD_coldfloor_13]
+t_sun_p = [PD_heatsun_1,PD_heatsun_2,PD_heatsun_3,PD_heatsun_4,PD_heatsun_5,PD_heatsun_6,PD_heatsun_7,PD_heatsun_8,PD_heatsun_9,PD_heatsun_10,PD_heatsun_11,PD_heatsun_12,PD_heatsun_13]
+t_heater_p =[PD_heater_1,PD_heater_2,PD_heater_3,PD_heater_4,PD_heater_5,PD_heater_6,PD_heater_7,PD_heater_8,PD_heater_9,PD_heater_10,PD_heater_11,PD_heater_12, PD_heater_13]
+PD_air = [PD_air1,PD_air2,PD_air3,PD_air4,PD_air5,PD_air6,PD_air7,PD_air8,PD_air9,PD_air10,PD_air11,PD_air12,PD_air13]
+PD_smell = [PD_smell1, PD_smell2, PD_smell3, PD_smell4, PD_smell5, PD_smell6, PD_smell7, PD_smell8, PD_smell9, PD_smell10, PD_smell11, PD_smell12, PD_smell13]
+PD_heavy = [PD_heavy1, PD_heavy2, PD_heavy3, PD_heavy4, PD_heavy5, PD_heavy6, PD_heavy7, PD_heavy8, PD_heavy9, PD_heavy10, PD_heavy11, PD_heavy12, PD_heavy13]
+PD_dry = [PD_dry1, PD_dry2, PD_dry3, PD_dry4, PD_dry5, PD_dry6, PD_dry7, PD_dry8, PD_dry9, PD_dry10, PD_dry11, PD_dry12, PD_dry13]
+PD_dust = [PD_dust1, PD_dust2, PD_dust3, PD_dust4, PD_dust5, PD_dust6, PD_dust7, PD_dust8, PD_dust9, PD_dust10, PD_dust11, PD_dust12, PD_dust13]
+
+
+
+
+
+
+ele_p1 = [Per_PD_elec_1,Per_PD_elec_2,Per_PD_elec_3,Per_PD_elec_4,Per_PD_elec_5,Per_PD_elec_6,Per_PD_elec_7,Per_PD_elec_8,Per_PD_elec_9,Per_PD_elec_10,Per_PD_elec_11,Per_PD_elec_12,Per_PD_elec_13]
+col_hot_p1 = [Per_PPD_m_col_hot_1, Per_PPD_m_col_hot_2,Per_PPD_m_col_hot_3,Per_PPD_m_col_hot_4,Per_PPD_m_col_hot_5,Per_PPD_m_col_hot_6,Per_PPD_m_col_hot_7,Per_PPD_m_col_hot_8,Per_PPD_m_col_hot_9,Per_PPD_m_col_hot_10,Per_PPD_m_col_hot_11,Per_PPD_m_col_hot_12,Per_PPD_m_col_hot_13]
+draw_p1 = [Per_PD_draw_1,Per_PD_draw_2,Per_PD_draw_3,Per_PD_draw_4,Per_PD_draw_5,Per_PD_draw_6,Per_PD_draw_7,Per_PD_draw_8,Per_PD_draw_9,Per_PD_draw_10,Per_PD_draw_11,Per_PD_draw_12,Per_PD_draw_13]
+fcold_p1 = [Per_PD_coldfloor_1,Per_PD_coldfloor_2,Per_PD_coldfloor_3,Per_PD_coldfloor_4,Per_PD_coldfloor_5,Per_PD_coldfloor_6,Per_PD_coldfloor_7,Per_PD_coldfloor_8,Per_PD_coldfloor_9,Per_PD_coldfloor_10,Per_PD_coldfloor_11,Per_PD_coldfloor_12,Per_PD_coldfloor_13]
+t_sun_p1 = [Per_PD_heatsun_1,Per_PD_heatsun_2,Per_PD_heatsun_3,Per_PD_heatsun_4,Per_PD_heatsun_5,Per_PD_heatsun_6,Per_PD_heatsun_7,Per_PD_heatsun_8,Per_PD_heatsun_9,Per_PD_heatsun_10,Per_PD_heatsun_11,Per_PD_heatsun_12,Per_PD_heatsun_13]
+t_heater_p1 =[Per_PD_heater_1,Per_PD_heater_2,Per_PD_heater_3,Per_PD_heater_4,Per_PD_heater_5,Per_PD_heater_6,Per_PD_heater_7,Per_PD_heater_8,Per_PD_heater_9,Per_PD_heater_10,Per_PD_heater_11,Per_PD_heater_12,Per_PD_heater_13]
+decipol = [decipol_1,decipol_2,decipol_3,decipol_4,decipol_5,decipol_6,decipol_7,decipol_8,decipol_9,decipol_10,decipol_11,decipol_12,decipol_13]
+P_PD_smell = [Per_PD_smell1,Per_PD_smell2,Per_PD_smell3,Per_PD_smell4,Per_PD_smell5,Per_PD_smell6,Per_PD_smell7,Per_PD_smell8,Per_PD_smell9,Per_PD_smell10,Per_PD_smell11,Per_PD_smell12,Per_PD_smell13]
+P_PD_heavy = [Per_PD_heavy1,Per_PD_heavy2,Per_PD_heavy3,Per_PD_heavy4,Per_PD_heavy5,Per_PD_heavy6,Per_PD_heavy7,Per_PD_heavy8,Per_PD_heavy9,Per_PD_heavy10,Per_PD_heavy11,Per_PD_heavy12,Per_PD_heavy13]
+P_PD_dry = [Per_PD_dry1,Per_PD_dry2,Per_PD_dry3,Per_PD_dry4,Per_PD_dry5,Per_PD_dry6,Per_PD_dry7,Per_PD_dry8,Per_PD_dry9,Per_PD_dry10,Per_PD_dry11,Per_PD_dry12,Per_PD_dry13]
+P_PD_dust = [Per_PD_dust1,Per_PD_dust2,Per_PD_dust3,Per_PD_dust4,Per_PD_dust5,Per_PD_dust6,Per_PD_dust7,Per_PD_dust8,Per_PD_dust9,Per_PD_dust10,Per_PD_dust11,Per_PD_dust12,Per_PD_dust13]
+
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, ele_p1, color='r',hatch='/',label = 'Electric shock')
+plt.bar(Days, col_hot_p1,bottom=ele_p1 ,color='b',hatch='O',label = 'Cold and hot')
+plt.bar(Days, draw_p1,bottom = np.add(ele_p1,col_hot_p1),color='g',hatch='+',label = 'Draught')
+plt.bar(Days, fcold_p1,bottom = np.add(np.add(ele_p1,col_hot_p1),draw_p1),color='k',hatch='x',label = 'Cold floor')
+plt.bar(Days, t_sun_p1,bottom = np.add(np.add(np.add(ele_p1,col_hot_p1),draw_p1),fcold_p1),color='m',hatch='-',label = 'Heat from sun')
+plt.bar(Days, t_heater_p1,bottom = np.add(np.add(np.add(np.add(ele_p1,col_hot_p1),draw_p1),fcold_p1),t_sun_p1),color='c',hatch='.',label = 'Heat from heater')
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied(%)',fontsize=20)
+plt.title('Percentage distribution of dissatisfaction due to different aspects in temperature with respect to days',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+
+
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, ele_p, color='r',hatch='/',label = 'Electric shock')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to electric shock',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, col_hot_p,color='b',hatch='O',label = 'Cold and hot')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.axhline(y = 6, color = 'g', linestyle = '-')
+plt.annotate('Category A ',
+            xy=(5, 6),fontsize=12)
+plt.axhline(y = 10, color = 'b', linestyle = '-')
+plt.annotate('Category B ',
+            xy=(5, 10),fontsize=12)
+plt.axhline(y = 15, color = 'r', linestyle = '-')
+plt.annotate('Category C ',
+            xy=(5, 15),fontsize=12)
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to thermal state (cold/hot)',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, draw_p,color='g',hatch='+',label = 'Draught')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.axhline(y = 10, color = 'g', linestyle = '-')
+plt.annotate('Category A ',
+            xy=(0, 10),fontsize=12)
+plt.axhline(y = 20, color = 'b', linestyle = '-')
+plt.annotate('Category B ',
+            xy=(0, 20),fontsize=12)
+plt.axhline(y = 30, color = 'r', linestyle = '-')
+plt.annotate('Category C ',
+            xy=(0, 30),fontsize=12)
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to draught',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, fcold_p,color='k',hatch='x',label = 'Cold floor')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.axhline(y = 10, color = 'g', linestyle = '-')
+plt.annotate('Category A&B',
+            xy=(0, 10),fontsize=12)
+plt.axhline(y = 15, color = 'r', linestyle = '-')
+plt.annotate('Category C ',
+            xy=(0, 15),fontsize=12)
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to cold floor',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, t_sun_p,color='m',hatch='-',label = 'Heat from sun')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.axhline(y = 5, color = 'g', linestyle = '-')
+plt.annotate('Category A&B ',
+            xy=(0, 5),fontsize=12)
+plt.axhline(y = 10, color = 'r', linestyle = '-')
+plt.annotate('Category C ',
+            xy=(0, 10),fontsize=12)
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to sunlight',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, t_heater_p,color='c',hatch='.',label = 'Heat from heater')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.axhline(y = 5, color = 'g', linestyle = '-')
+plt.annotate('Category A&B ',
+            xy=(0, 5),fontsize=12)
+plt.axhline(y = 10, color = 'r', linestyle = '-')
+plt.annotate('Category C ',
+            xy=(0, 10),fontsize=12)
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to heat from heater',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+plt.figure(figsize=(10, 10))
+
+plt.scatter(sorted(decipol),sorted(PD_air),color='r',label = 'Decipol vs PD')
+plt.plot(sorted(decipol),sorted(PD_air),color='r')
+#add trendline to plot
+
+plt.xlabel('Perceived air Quality (Ci)',fontsize=20)
+plt.ylabel('Perceived Air Quality % Dissatisfied (PD)',fontsize=20)
+plt.title('Relationship between perceived air quality dissatisfied (PD) % vs Perceived air quality',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, P_PD_smell, color='r',hatch='/',label = 'PD due to smell in air ')
+plt.bar(Days, P_PD_heavy,bottom=P_PD_smell ,color='b',hatch='O',label = 'PD due to heavy air')
+plt.bar(Days, P_PD_dry,bottom = np.add(P_PD_smell,P_PD_heavy),color='g',hatch='+',label = 'PD due to dry air')
+plt.bar(Days, P_PD_dust,bottom = np.add(np.add(P_PD_smell,P_PD_heavy),P_PD_dry),color='k',hatch='x',label = 'PD due to dust in air')
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied(%)',fontsize=20)
+plt.title('Percentage distribution of dissatisfaction due to different aspects in air with respect to days',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days, PD_smell, color='b',hatch='+',label = 'PD due to smell')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to smell in air',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days,PD_heavy , color='k',hatch='-',label = 'PD due to heavy air')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to heavy air',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days,PD_dry, color='m',hatch='x',label = 'PD due to dry air')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to dry air ',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+plt.figure(figsize=(10, 10))
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+plt.bar(Days,PD_dust, color='c',hatch='o',label = 'PD due to dust in air')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.xlabel('Days',fontsize=20)
+plt.ylabel('Percentage Dissatisfied (%)',fontsize=20)
+plt.title('Percentage dissatisfaction due to dust in air ',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+
+
+Øyra_a = pd.read_csv('øyra_302_230224_133924_spacepro_2969034330.csv',encoding='latin1')
+Øyra_a.info()
+Øyra_a.head()
+
+#Day1
+temp_a1 = Øyra_a.iloc[10198:10317,8].mode().iloc[0]
+print(temp_a1)
+rh_a1 = Øyra_a.iloc[10198:10317, 11].mode().iloc[0]
+print(rh_a1)
+press_a1 = Øyra_a.iloc[10198:10317, 14].mode().iloc[0]
+print(press_a1)
+CO2_a1 = Øyra_a.iloc[10198:10317, 17].mode().iloc[0]
+print(CO2_a1)
+VOC_a1 = Øyra_a.iloc[10198:10317, 20].mode().iloc[0] 
+print(VOC_a1)       
+Lite_a1 = Øyra_a.iloc[10198:10317, 23].mode().iloc[0]
+print(Lite_a1)
+PM1_a1 = Øyra_a.iloc[10198:10317, 24].mode().iloc[0] 
+print(PM1_a1)
+PM25_a1 = Øyra_a.iloc[10198:10317, 25].mode().iloc[0]
+print(PM25_a1)
+Sound_a1 = Øyra_a.iloc[10198:10317, 28].mode().iloc[0]
+print(Sound_a1)
+PDc1 = 395 * np.exp(-15.15*(CO2_a1-400)**-0.25)
+Draught1 = (34 - temp_a1)*0.4924
+
+
+#Day2
+temp_a2 = Øyra_a.iloc[11350:11493, 8].mode().iloc[0]
+rh_a2 = Øyra_a.iloc[11350:11493, 11].mode().iloc[0]
+press_a2 = Øyra_a.iloc[11350:11493, 14].mode().iloc[0]
+CO2_a2 = Øyra_a.iloc[11350:11493, 17].mode().iloc[0]
+VOC_a2 = Øyra_a.iloc[11350:11493, 20].mode().iloc[0]        
+Lite_a2 = Øyra_a.iloc[11350:11493, 23].mode().iloc[0]
+PM1_a2 = Øyra_a.iloc[11350:11493, 24].mode().iloc[0] 
+PM25_a2 = Øyra_a.iloc[11350:11493, 25].mode().iloc[0]
+Sound_a2 = Øyra_a.iloc[11350:11493, 28].mode().iloc[0]
+PDc2 = 395 * np.exp(-15.15*(CO2_a2-400)**-0.25)
+Draught2 = (34 - temp_a2)*0.4924 
+
+ 
+#Day3
+temp_a3 = Øyra_a.iloc[11926:12021, 8].mode().iloc[0]
+rh_a3 = Øyra_a.iloc[11926:12021, 11].mode().iloc[0]
+press_a3 = Øyra_a.iloc[11926:12021, 14].mode().iloc[0]
+CO2_a3 = Øyra_a.iloc[11926:12021, 17].mode().iloc[0]
+VOC_a3 = Øyra_a.iloc[11926:12021, 20].mode().iloc[0]        
+Lite_a3 = Øyra_a.iloc[11926:12021, 23].mode().iloc[0]
+PM1_a3 = Øyra_a.iloc[11926:12021, 24].mode().iloc[0] 
+PM25_a3 = Øyra_a.iloc[11926:12021, 25].mode().iloc[0]
+Sound_a3 = Øyra_a.iloc[11926:12021, 28].mode().iloc[0]
+PDc3 = 395 * np.exp(-15.15*(CO2_a3-400)**-0.25)
+Draught3 = (34 - temp_a3)*0.4924
+
+
+#Day4
+temp_a4 = Øyra_a.iloc[13654:13677, 8].mode().iloc[0]
+rh_a4 = Øyra_a.iloc[13654:13677, 11].mode().iloc[0]
+press_a4 = Øyra_a.iloc[13654:13677, 14].mode().iloc[0]
+CO2_a4 = Øyra_a.iloc[13654:13677, 17].mode().iloc[0]
+VOC_a4 = Øyra_a.iloc[13654:13677, 20].mode().iloc[0]        
+Lite_a4 = Øyra_a.iloc[13654:13677, 23].mode().iloc[0]
+PM1_a4 = Øyra_a.iloc[13654:13677, 24].mode().iloc[0] 
+PM25_a4 = Øyra_a.iloc[13654:13677, 25].mode().iloc[0]
+Sound_a4 = Øyra_a.iloc[13654:13677, 28].mode().iloc[0]
+PDc4 = 395 * np.exp(-15.15*(CO2_a4-400)**-0.25)
+Draught4 = (34 - temp_a4)*0.4924 
+
+
+#Day5
+temp_a5 = Øyra_a.iloc[14326:14349, 8].mode().iloc[0]
+rh_a5 = Øyra_a.iloc[14326:14349, 11].mode().iloc[0]
+press_a5 = Øyra_a.iloc[14326:14349, 14].mode().iloc[0]
+CO2_a5 = Øyra_a.iloc[14326:14349, 17].mode().iloc[0]
+VOC_a5 = Øyra_a.iloc[14326:14349, 20].mode().iloc[0]        
+Lite_a5 = Øyra_a.iloc[14326:14349, 23].mode().iloc[0]
+PM1_a5 = Øyra_a.iloc[14326:14349, 24].mode().iloc[0] 
+PM25_a5 = Øyra_a.iloc[14326:14349, 25].mode().iloc[0]
+Sound_a5 = Øyra_a.iloc[14326:14349, 28].mode().iloc[0]
+PDc5 = 395 * np.exp(-15.15*(CO2_a5-400)**-0.25)
+Draught5 = (34 - temp_a5)*0.4924
+
+#Day6
+temp_a6 = Øyra_a.iloc[14806:14949, 8].mode().iloc[0]
+rh_a6 = Øyra_a.iloc[14806:14949, 11].mode().iloc[0]
+press_a6 = Øyra_a.iloc[14806:14949, 14].mode().iloc[0]
+CO2_a6 = Øyra_a.iloc[14806:14949, 17].mode().iloc[0]
+VOC_a6 = Øyra_a.iloc[14806:14949, 20].mode().iloc[0]        
+Lite_a6 = Øyra_a.iloc[14806:14949, 23].mode().iloc[0]
+PM1_a6 = Øyra_a.iloc[14806:14949, 24].mode().iloc[0] 
+PM25_a6 = Øyra_a.iloc[14806:14949, 25].mode().iloc[0]
+Sound_a6 = Øyra_a.iloc[14806:14949, 28].mode().iloc[0]
+PDc6 = 395 * np.exp(-15.15*(CO2_a6-400)**-0.25)
+Draught6 = (34 - temp_a6)*0.4924
+
+#Day7
+temp_a7 = Øyra_a.iloc[15382:15525, 8].mode().iloc[0]
+rh_a7 = Øyra_a.iloc[15382:15525, 11].mode().iloc[0]
+press_a7 = Øyra_a.iloc[15382:15525, 14].mode().iloc[0]
+CO2_a7 = Øyra_a.iloc[15382:15525, 17].mode().iloc[0]
+VOC_a7 = Øyra_a.iloc[15382:15525, 20].mode().iloc[0]        
+Lite_a7 = Øyra_a.iloc[15382:15525, 23].mode().iloc[0]
+PM1_a7 = Øyra_a.iloc[15382:15525, 24].mode().iloc[0] 
+PM25_a7 = Øyra_a.iloc[15382:15525, 25].mode().iloc[0]
+Sound_a7 = Øyra_a.iloc[15382:15525, 28].mode().iloc[0]
+PDc7 = 395 * np.exp(-15.15*(CO2_a7-400)**-0.25)
+Draught7 = (34 - temp_a7)*0.4924
+
+
+#Day8
+temp_a8 = Øyra_a.iloc[15958:16077, 8].mode().iloc[0]
+rh_a8 = Øyra_a.iloc[15958:16077, 11].mode().iloc[0]
+press_a8 = Øyra_a.iloc[15958:16077, 14].mode().iloc[0]
+CO2_a8 = Øyra_a.iloc[15958:16077, 17].mode().iloc[0]
+VOC_a8 = Øyra_a.iloc[15958:16077, 20].mode().iloc[0]        
+Lite_a8 = Øyra_a.iloc[15958:16077, 23].mode().iloc[0]
+PM1_a8 = Øyra_a.iloc[15958:16077, 24].mode().iloc[0] 
+PM25_a8 = Øyra_a.iloc[15958:16077, 25].mode().iloc[0]
+Sound_a8 = Øyra_a.iloc[15958:16077, 28].mode().iloc[0]
+PDc8 = 395 * np.exp(-15.15*(CO2_a8-400)**-0.25)
+Draught8 = (34 - temp_a8)*0.4924
+
+
+#Day9
+temp_a9 = Øyra_a.iloc[17662:17685, 8].mode().iloc[0]
+rh_a9 = Øyra_a.iloc[17662:17685, 11].mode().iloc[0]
+press_a9 = Øyra_a.iloc[17662:17685, 14].mode().iloc[0]
+CO2_a9 = Øyra_a.iloc[17662:17685, 17].mode().iloc[0]
+VOC_a9 = Øyra_a.iloc[17662:17685, 20].mode().iloc[0]        
+Lite_a9 = Øyra_a.iloc[17662:17685, 23].mode().iloc[0]
+PM1_a9 = Øyra_a.iloc[17662:17685, 24].mode().iloc[0] 
+PM25_a9 = Øyra_a.iloc[17662:17685, 25].mode().iloc[0]
+Sound_a9 = Øyra_a.iloc[17662:17685, 28].mode().iloc[0]
+PDc9 = 395 * np.exp(-15.15*(CO2_a9-400)**-0.25)
+Draught9 = (34 - temp_a9)*0.4924
+
+#Day10
+temp_a10 = Øyra_a.iloc[18238:18357, 8].mode().iloc[0]
+rh_a10 = Øyra_a.iloc[18238:18357, 11].mode().iloc[0]
+press_a10 = Øyra_a.iloc[18238:18357, 14].mode().iloc[0]
+CO2_a10 = Øyra_a.iloc[18238:18357, 17].mode().iloc[0]
+VOC_a10 = Øyra_a.iloc[18238:18357, 20].mode().iloc[0]        
+Lite_a10 = Øyra_a.iloc[18238:18357, 23].mode().iloc[0]
+PM1_a10 = Øyra_a.iloc[18238:18357, 24].mode().iloc[0] 
+PM25_a10 = Øyra_a.iloc[18238:18357, 25].mode().iloc[0]
+Sound_a10 = Øyra_a.iloc[18238:18357, 28].mode().iloc[0]
+PDc10 = 395 * np.exp(-15.15*(CO2_a10-400)**-0.25)
+Draught10 = (34 - temp_a10)*0.4924
+
+#Day11
+temp_a11 = Øyra_a.iloc[18814:18957, 8].mode().iloc[0]
+rh_a11 = Øyra_a.iloc[18814:18957, 11].mode().iloc[0]
+press_a11 = Øyra_a.iloc[18814:18957, 14].mode().iloc[0]
+CO2_a11 = Øyra_a.iloc[18814:18957, 17].mode().iloc[0]
+VOC_a11 = Øyra_a.iloc[18814:18957, 20].mode().iloc[0]        
+Lite_a11 = Øyra_a.iloc[18814:18957, 23].mode().iloc[0]
+PM1_a11 = Øyra_a.iloc[18814:18957, 24].mode().iloc[0] 
+PM25_a11 = Øyra_a.iloc[18814:18957, 25].mode().iloc[0]
+Sound_a11 = Øyra_a.iloc[18814:18957, 28].mode().iloc[0]
+PDc11 = 395 * np.exp(-15.15*(CO2_a11-400)**-0.25)
+Draught11 = (34 - temp_a11)*0.4924
+
+#Day12
+temp_a12 = Øyra_a.iloc[19390:19413, 8].mode().iloc[0]
+rh_a12 = Øyra_a.iloc[19390:19413, 11].mode().iloc[0]
+press_a12 = Øyra_a.iloc[19390:19413, 14].mode().iloc[0]
+CO2_a12 = Øyra_a.iloc[19390:19413, 17].mode().iloc[0]
+VOC_a12 = Øyra_a.iloc[19390:19413, 20].mode().iloc[0]        
+Lite_a12 = Øyra_a.iloc[19390:19413, 23].mode().iloc[0]
+PM1_a12 = Øyra_a.iloc[19390:19413, 24].mode().iloc[0] 
+PM25_a12 = Øyra_a.iloc[19390:19413, 25].mode().iloc[0]
+Sound_a12 = Øyra_a.iloc[19390:19413, 28].mode().iloc[0]
+PDc12 = 395 * np.exp(-15.15*(CO2_a12-400)**-0.25)
+Draught12 = (34 - temp_a12)*0.4924
+
+
+#Day13
+temp_a13 = Øyra_a.iloc[19966:20085, 8].mode().iloc[0]
+rh_a13 = Øyra_a.iloc[19966:20085, 11].mode().iloc[0]
+press_a13 = Øyra_a.iloc[19966:20085, 14].mode().iloc[0]
+CO2_a13 = Øyra_a.iloc[19966:20085, 17].mode().iloc[0]
+VOC_a13 = Øyra_a.iloc[19966:20085, 20].mode().iloc[0]        
+Lite_a13 = Øyra_a.iloc[19966:20085, 23].mode().iloc[0]
+PM1_a13 = Øyra_a.iloc[19966:20085, 24].mode().iloc[0] 
+PM25_a13 = Øyra_a.iloc[19966:20085, 25].mode().iloc[0]
+Sound_a13 = Øyra_a.iloc[19966:20085, 28].mode().iloc[0]
+PDc13 = 395 * np.exp(-15.15*(CO2_a13-400)**-0.25)
+Draught13 = (34 - temp_a13)*0.4924
+
+
+co2d = [CO2_a1,CO2_a2,CO2_a3,CO2_a4,CO2_a5,CO2_a6,CO2_a7,CO2_a8,CO2_a9,CO2_a10,CO2_a11,CO2_a12,CO2_a13]
+
+PDc = [PDc1,PDc2,PDc3,PDc4,PDc5,PDc6,PDc7,PDc8,PDc9,PDc10,PDc11,PDc12,PDc13]
+
+tempd = [temp_a1,temp_a2,temp_a3,temp_a4,temp_a5,temp_a6,temp_a7,temp_a8,temp_a9,temp_a10,temp_a11,temp_a12,temp_a13]
+rhd = [rh_a1,rh_a2,rh_a3,rh_a4,rh_a5,rh_a6,rh_a7,rh_a8,rh_a9,rh_a10,rh_a11,rh_a12,rh_a13]
+Draught = [Draught1,Draught2,Draught3,Draught4,Draught5,Draught6,Draught7,Draught8,Draught9,Draught10,Draught11,Draught12,Draught13]
+tdb1 = tempd
+tr1 = tdb1
+rh1 = rhd
+v1 = 0.1
+met1 = 1.2
+clo1 =1
+  
+#calculate relative air speed 
+v_r1 = v_relative (v=v1, met=met1)
+
+#calculate dynamic clothing
+clo_d1 = clo_dynamic(clo=clo1, met=met1)
+results1 = pmv_ppd(tdb=tdb1, tr=tr1, vr=v_r1, rh=rh1, met=met1, clo=clo_d1)
+
+Days= ['D1','D2','D3','D4','D5','D6','D7','D8','D9','D10','D11','D12','D13']
+#x_axisd = np.arange(len(Days))
+
+#plt.figure(figsize=(10, 6))
+#plt.plot(x_axisd,tempd,'g--')
+#plt.axhline(y = 20, color = 'r', linestyle = '-') 
+#plt.axhline(y = 22, color = 'g', linestyle = '-') 
+#plt.axhline(y = 27, color = 'r', linestyle = '-') 
+#plt.xlabel('Days',fontsize=20)
+#plt.ylabel('Temperature (°C)',fontsize=20)
+#plt.title('1st maximum occuring temperature (°C) with days',fontsize=20)
+#plt.xticks(x_axisd,Days)
+#plt.grid()
+#plt.show()
+
+#plt.figure(figsize=(10, 6))
+#plt.plot(x_axisd,rhd,'g--')
+#plt.axhline(y = 30, color = 'r', linestyle = '-')  
+#plt.axhline(y = 70, color = 'r', linestyle = '-') 
+#plt.xlabel('Days',fontsize=20)
+#plt.ylabel('Relative Humidity (%)',fontsize=20)
+#plt.title('1st maximum  occurring relative humidity (%) with days',fontsize=20)
+#plt.xticks(x_axisd,Days)
+#plt.grid()
+#plt.show()
+
+print('the pmv and ppd are')
+print(results1["pmv"])
+print(results1["ppd"])
+
+PMVs = [-0.78,-0.78,-0.76,-0.76,-0.75,-0.74,-0.69,-0.69,-0.65,-0.64,-0.56,-0.55,-0.49]
+
+PPDs = [17.8,17.7,17.3,17.1,16.9,16.4,15,14.9,13.8,13.6,11.5,11.4,10.1]
+
+plt.figure(figsize=(10, 10))
+
+plt.scatter(PMVs,PPDs,color='r',label = 'PMV vs PPD')
+plt.plot(PMVs,PPDs,color='r')
+plt.yticks((0,5,10,15,20,25,30,35))
+plt.axhline(y = 6, color = 'g', linestyle = '-')
+plt.annotate('Category A ',
+            xy=(-0.65, 6),fontsize=12)
+plt.axhline(y = 10, color = 'b', linestyle = '-')
+plt.annotate('Category B ',
+            xy=(-0.65, 10),fontsize=12)
+plt.axhline(y = 15, color = 'r', linestyle = '-')
+plt.annotate('Category C ',
+            xy=(-0.65, 15),fontsize=12)
+plt.xlabel('PMV',fontsize=20)
+plt.ylabel('PPD (%)',fontsize=20)
+plt.title('Relationship between Percentage Dissatisfied and PMV',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+
+plt.figure(figsize=(10, 10))
+
+plt.scatter(sorted(co2d),sorted(PDc),color='r',label = 'CO2(ppm) and Percentage Dissatisfied')
+plt.plot(sorted(co2d),sorted(PDc),color='r')
+plt.axvline(x = 950, color = 'g', linestyle = '-')
+plt.annotate('Category A',xy=(950, 6),fontsize=12,rotation=90)
+plt.axvline(x = 1200, color = 'b', linestyle = '-')
+plt.annotate('Category B',xy=(1200, 6),fontsize=12,rotation=90)
+plt.axvline(x = 1750, color = 'r', linestyle = '-')
+plt.annotate('Category C&D',xy=(1750, 6),fontsize=12,rotation=90)
+
+plt.xlabel('CO2 (ppm)',fontsize=20)
+plt.ylabel('Percentage Dissatisfied due to air quality',fontsize=20)
+plt.title('Relationship between Percentage Dissatisfied due to air quality',fontsize=20)
+plt.legend(loc='center left', bbox_to_anchor=(1.05, 0.8),fontsize=20)
+plt.grid()
+plt.show()
+
+
+Øyra_b = pd.read_csv('øyra_302_230308_0006_sauter_noserialnumber.csv',encoding='latin1')
+Øyra_b.info()
+Øyra_b.head()
+
+#Day1
+temp_s1 = Øyra_b.iloc[8460:8760, 1].mode().iloc[0]
+#Day2
+temp_s2 = Øyra_b.iloc[11337:11697, 1].mode().iloc[0] 
+#Day3
+temp_s3 = Øyra_b.iloc[12777:13016, 1].mode().iloc[0]
+#Day4
+temp_s4 = Øyra_b.iloc[17097:17157, 1].mode().iloc[0]
+#Day5
+temp_s5 = Øyra_b.iloc[18777:18836, 1].mode().iloc[0]
+#Day6
+temp_s6 = Øyra_b.iloc[19977:20337, 1].mode().iloc[0]
+#Day7
+temp_s7 = Øyra_b.iloc[21417:21776, 1].mode().iloc[0]
+#Day8
+temp_s8 = Øyra_b.iloc[22857:23156, 1].mode().iloc[0]
+#Day9
+temp_s9 = Øyra_b.iloc[27057:27116, 1].mode().iloc[0]
+#Day10
+temp_s10 = Øyra_b.iloc[28497:28796, 1].mode().iloc[0]
+#Day11
+temp_s11 = Øyra_b.iloc[29937:30296, 1].mode().iloc[0]
+#Day12
+temp_s12 = Øyra_b.iloc[31377:31437, 1].mode().iloc[0]
+#Day13
+temp_s13 = Øyra_b.iloc[32817:33117, 1].mode().iloc[0]
+
+
+print('PPD and cold hot ')
+print(PPDs)
+print(col_hot_p)
 
 
 
